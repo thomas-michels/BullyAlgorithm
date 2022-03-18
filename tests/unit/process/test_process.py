@@ -15,6 +15,7 @@ class TestProcess(unittest.TestCase):
 
     def test_change_status(self):
         """
+        Test to check status is changed
         """
         p1, p2 = self.__instance_process()
 
@@ -27,6 +28,7 @@ class TestProcess(unittest.TestCase):
 
     def test_ids(self):
         """
+        Test to check if ids are diferent
         """
         p1, p2 = self.__instance_process()
 
