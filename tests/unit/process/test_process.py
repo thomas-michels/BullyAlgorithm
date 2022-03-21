@@ -45,4 +45,4 @@ class TestProcess(unittest.TestCase):
         p1.change_status()
 
         self.assertFalse(p2.send_request(p1))
-        self.assertTrue(p1.send_request(p2))
+        self.assertFalse(p1.send_request(p2))

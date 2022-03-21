@@ -51,7 +51,7 @@ class Process:
         :return:
             Bool
         """
-        if self.is_active:
+        if self.is_active():
             return process.is_active()
 
         return False
