@@ -2,7 +2,6 @@
 Process module
 """
 
-from typing import NoReturn
 from app.utils import GenerateID
 
 
@@ -21,12 +20,12 @@ class Process:
         """
         return self.__id
 
-    def change_status(self) -> NoReturn:
+    def change_status(self) -> None:
         """
         Method to change status of process
 
         :return:
-            NoReturn
+            None
         """
         self.__is_active = not self.__is_active
 

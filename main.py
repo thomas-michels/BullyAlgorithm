@@ -2,7 +2,7 @@
 Main module 
 """
 
-from app import System
+from app import Application
 
 if __name__ == "__main__":
-    System()
+    Application()

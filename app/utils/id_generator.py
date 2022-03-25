@@ -2,7 +2,6 @@
 GenerateID module
 """
 
-from typing import NoReturn
 from app.utils.singleton import Singleton
 
 
@@ -17,12 +16,12 @@ class GenerateID(Singleton):
         self.__increment()
         return self.__id
 
-    def __increment(self) -> NoReturn:
+    def __increment(self) -> None:
         """
         Autoincrement to id
 
         :return:
-            NoReturn
+            None
         """
 
         self.__id += 1

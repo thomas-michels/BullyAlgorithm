@@ -2,4 +2,4 @@
 App module
 """
 
-from app.application import System
+from app.application import Application

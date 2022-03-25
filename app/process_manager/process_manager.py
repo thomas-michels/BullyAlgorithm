@@ -2,7 +2,7 @@
     Module for Process Manager class
 """
 
-from typing import List, NoReturn
+from typing import List
 from random import choice
 from app.request import Request
 from app.coordenator import Coordenator
@@ -31,18 +31,18 @@ class ProcessManager:
         """
         return self.__processes
 
-    def new_process(self) -> NoReturn:
+    def new_process(self) -> None:
         """
         Method to create new process
 
         :return:
-            NoReturn
+            None
         """
         process = Process()
         self.__processes.append(process)
         print(f"O Processo com o ID {process.get_id()} foi criado!")
 
-    def deactive_process(self, process: Process) -> NoReturn:
+    def deactive_process(self, process: Process) -> None:
         """
         Method to deactive process
 
@@ -50,17 +50,17 @@ class ProcessManager:
             process: Process
 
         :return:
-            NoReturn
+            None
         """
         process.change_status()
         print(f"O processo com o ID {process.get_id()} foi desativado!")
 
-    def set_coordenator(self, process: Process) -> NoReturn:
+    def set_coordenator(self, process: Process) -> None:
         """
         Method to set new coordenator
 
         :return:
-            NoReturn
+            None
         """
         self.__coordenator = Coordenator(process=process)
 
@@ -73,12 +73,12 @@ class ProcessManager:
         """
         self.__coordenator
 
-    def election_time(self) -> NoReturn:
+    def election_time(self) -> None:
         """
         Method to run election of coordenator
 
         :return:
-            NoReturn
+            None
         """
         process = choice(self.get_processes())
         if Request.send(self.__coordenator):
