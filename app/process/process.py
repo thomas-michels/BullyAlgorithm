@@ -8,11 +8,9 @@ from app.utils import GenerateID
 
 class Process:
 
-    __id: int
-    __is_active: bool = True
-
     def __init__(self) -> None:
         self.__id = GenerateID().get_id()
+        self.__is_active = True
 
     def get_id(self) -> int:
         """
@@ -40,18 +38,3 @@ class Process:
             Bool
         """
         return self.__is_active
-
-    def send_request(self, process) -> bool:
-        """
-        Method to send message for another process
-
-        :param:
-            process: Process
-
-        :return:
-            Bool
-        """
-        if self.is_active():
-            return process.is_active()
-
-        return False
