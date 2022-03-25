@@ -5,6 +5,7 @@ from typing import Tuple
 import unittest
 from app.process import Process
 
+
 class TestProcess(unittest.TestCase):
     """
     Test Process class
