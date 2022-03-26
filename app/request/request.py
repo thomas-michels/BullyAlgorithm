@@ -10,7 +10,7 @@ class Request:
     Request class
     """
 
-    @classmethod
+    @staticmethod
     def send(sender: Process, receiver: Process) -> bool:
         """
         Method to send request
@@ -22,7 +22,11 @@ class Request:
         :return:
             bool
         """
-        if sender.is_active:
-            return receiver.is_active
+        try:
+            if sender.is_active():
+                return receiver.is_active()
 
-        raise SenderOffline()
+            return False
+
+        except Exception:
+            return False

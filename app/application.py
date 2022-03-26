@@ -2,22 +2,34 @@
 Application module
 """
 
+from datetime import datetime
+from app.process_manager import ProcessManager
+from app.election import BullyAlgorithm
+import sched, time
+
+
 class Application:
 
-    def run(self):
-        """ """
+    def __init__(self) -> None:
+        self.process_manager = ProcessManager(BullyAlgorithm())
+        self.scheduler = sched.scheduler(time.time, time.sleep)
+        self.run()
 
-        print(f"Sistema Iniciado - {datetime.now()}")
-        new_process = Timer(30, self.new_process())
-        new_process.start()
+    def run(self) -> None:
+        """
+        Method to run Application
 
-        request_to_coordenator = Timer(
-            25, self.election_time()
-        )
-        request_to_coordenator.start()
+        :return:
+            None
+        """
+            
+        self.schedules()
 
-        inactive_coordenator = Timer(100, self.__coordenator.change_status())
-        inactive_coordenator.start()
-
-        inactive_process = Timer(80, choice(self.get_processes()).change_status())
-        inactive_process.start()
+    def schedules(self):
+        print(time.time())
+        self.scheduler.enter(25, 1, self.process_manager.election_time())
+        self.scheduler.enter(30, 1, self.process_manager.new_process())
+        self.scheduler.enter(80, 1, self.process_manager.deactive_random_process())
+        self.scheduler.enter(100, 1, self.process_manager.deactive_process(self.process_manager.get_coordenator()))
+        self.scheduler.run()
+        print(time.time())

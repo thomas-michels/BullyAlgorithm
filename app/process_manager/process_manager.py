@@ -15,21 +15,25 @@ class ProcessManager:
     ProcessManager class
     """
 
-    __processes: List[Process] = []
-    __coordenator: Coordenator = None
-    __election_type: ElectionInterface
+    def __init__(self, election_algotithm) -> None:
+        self.__election_type: ElectionInterface = election_algotithm
+        self.__processes: List[Process] = []
+        self.__coordenator: Coordenator = None
 
-    def __init__(self, election_algotithm: ElectionInterface) -> None:
-        self.__election_type = election_algotithm
-
-    def get_processes(self) -> List[Process]:
+    def get_active_processes(self) -> List[Process]:
         """
-        Method for get all processess
+        Method for get all active processess
 
         :return:
             List[Process]
         """
-        return self.__processes
+        actives = []
+
+        for process in self.__processes:
+            if process.is_active():
+                actives.append(process)
+
+        return actives
 
     def new_process(self) -> None:
         """
@@ -41,6 +45,16 @@ class ProcessManager:
         process = Process()
         self.__processes.append(process)
         print(f"O Processo com o ID {process.get_id()} foi criado!")
+
+    def deactive_random_process(self) -> None:
+        """
+        Method to deactive random process in processes list
+
+        :return:
+            None
+        """
+        chosen_process = choice(self.get_active_processes())
+        self.deactive_process(chosen_process)
 
     def deactive_process(self, process: Process) -> None:
         """
@@ -80,6 +94,7 @@ class ProcessManager:
         :return:
             None
         """
-        process = choice(self.get_processes())
-        if Request.send(self.__coordenator):
-            self.__election_type.run_election(process_start=process, processes=self.get_processes())
+        process = choice(self.get_active_processes())
+        if process:
+            if not Request.send(process, self.__coordenator):
+                self.set_coordenator(self.__election_type.run_election(process_start=process, processes=self.get_active_processes()))
