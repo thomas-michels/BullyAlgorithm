@@ -2,10 +2,10 @@
 Application module
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from app.process_manager import ProcessManager
 from app.election import BullyAlgorithm
-import time
+from app.multiprocessing import ProcessThread
 
 
 class Application:
@@ -20,35 +20,23 @@ class Application:
         :return:
             None
         """
-        time_now = datetime.now()
+        time_now = ProcessThread(1, self.show_time)
+        request_coordenator = ProcessThread(25, self.process_manager.send_request_to_coordenator)
+        new_process = ProcessThread(30, self.process_manager.new_process)
+        deactive_random = ProcessThread(80, self.process_manager.deactive_random_process)
+        deactive_coordenator = ProcessThread(100, self.process_manager.deactive_coordenator)
 
-        election = time_now + timedelta(seconds=25)
-        new_process = time_now + timedelta(seconds=30)
-        deactive_random_process = time_now + timedelta(seconds=80)
-        deactive_coordenator = time_now + timedelta(seconds=100)
+        time_now.start()
+        request_coordenator.start()
+        new_process.start()
+        deactive_random.start()
+        deactive_coordenator.start()
+        time_now.join()
+        request_coordenator.join()
+        new_process.join()
+        deactive_random.join()
+        deactive_coordenator.join()
 
-        while True:
 
-            time_now = datetime.now()
-            print(f"Hora atual - {time_now}")
-
-            if election <= time_now:
-                self.process_manager.send_request_to_coordenator()
-                election = time_now + timedelta(seconds=25)
-
-            if new_process <= time_now:
-                self.process_manager.new_process()
-                new_process = time_now + timedelta(seconds=30)
-
-            if deactive_random_process <= time_now:
-                self.process_manager.deactive_random_process()
-                deactive_random_process = time_now + timedelta(seconds=80)
-
-            if deactive_coordenator <= time_now:
-                self.process_manager.deactive_process(
-                    self.process_manager.get_coordenator()
-                )
-                deactive_coordenator = time_now + timedelta(seconds=100)
-
-            print("#"*50)
-            time.sleep(1)
+    def show_time(self):
+        print(f"Hora atual - {datetime.now()}")

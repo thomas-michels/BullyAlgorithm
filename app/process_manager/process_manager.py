@@ -19,6 +19,9 @@ class ProcessManager:
         self.__processes: List[Process] = []
         self.__coordenator = None
 
+    def get_processes(self):
+        return self.__processes
+
     def get_active_processes(self) -> List[Process]:
         """
         Method for get all active processess
@@ -68,6 +71,21 @@ class ProcessManager:
         if process:
             process.change_status()
             print(f"O processo com o ID {process.get_id()} foi desativado!")
+
+    def deactive_coordenator(self) -> None:
+        """
+        Method to deactive process
+
+        :param:
+            process: Process
+
+        :return:
+            None
+        """
+
+        if self.__coordenator:
+            self.__coordenator.change_status()
+            print(f"O coordenador com o ID {self.__coordenator.get_id()} foi desativado!")
 
     def set_coordenator(self, process: Process) -> None:
         """
