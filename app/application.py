@@ -2,17 +2,15 @@
 Application module
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from app.process_manager import ProcessManager
 from app.election import BullyAlgorithm
-import sched, time
+import time
 
 
 class Application:
-
     def __init__(self) -> None:
         self.process_manager = ProcessManager(BullyAlgorithm())
-        self.scheduler = sched.scheduler(time.time, time.sleep)
         self.run()
 
     def run(self) -> None:
@@ -22,14 +20,35 @@ class Application:
         :return:
             None
         """
-            
-        self.schedules()
+        time_now = datetime.now()
 
-    def schedules(self):
-        print(time.time())
-        self.scheduler.enter(25, 1, self.process_manager.election_time())
-        self.scheduler.enter(30, 1, self.process_manager.new_process())
-        self.scheduler.enter(80, 1, self.process_manager.deactive_random_process())
-        self.scheduler.enter(100, 1, self.process_manager.deactive_process(self.process_manager.get_coordenator()))
-        self.scheduler.run()
-        print(time.time())
+        election = time_now + timedelta(seconds=25)
+        new_process = time_now + timedelta(seconds=30)
+        deactive_random_process = time_now + timedelta(seconds=80)
+        deactive_coordenator = time_now + timedelta(seconds=100)
+
+        while True:
+
+            time_now = datetime.now()
+            print(f"Hora atual - {time_now}")
+
+            if election <= time_now:
+                self.process_manager.send_request_to_coordenator()
+                election = time_now + timedelta(seconds=25)
+
+            if new_process <= time_now:
+                self.process_manager.new_process()
+                new_process = time_now + timedelta(seconds=30)
+
+            if deactive_random_process <= time_now:
+                self.process_manager.deactive_random_process()
+                deactive_random_process = time_now + timedelta(seconds=80)
+
+            if deactive_coordenator <= time_now:
+                self.process_manager.deactive_process(
+                    self.process_manager.get_coordenator()
+                )
+                deactive_coordenator = time_now + timedelta(seconds=100)
+
+            print("#"*50)
+            time.sleep(1)

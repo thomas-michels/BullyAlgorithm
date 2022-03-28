@@ -34,16 +34,3 @@ class TestProcess(unittest.TestCase):
         p1, p2 = self.__instance_process()
 
         self.assertGreater(p2.get_id(), p1.get_id())
-
-    def test_send_request(self):
-        """
-        Test send request
-        """
-        p1, p2 = self.__instance_process()
-
-        self.assertTrue(p1.send_request(p2))
-
-        p1.change_status()
-
-        self.assertFalse(p2.send_request(p1))
-        self.assertFalse(p1.send_request(p2))
