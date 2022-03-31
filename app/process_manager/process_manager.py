@@ -84,10 +84,14 @@ class ProcessManager:
         """
 
         if self.__coordenator:
-            self.__coordenator.change_status()
-            print(
-                f"O coordenador com o ID {self.__coordenator.get_id()} foi desativado!"
-            )
+            if self.__coordenator.is_active():
+                self.__coordenator.change_status()
+                print(
+                    f"O coordenador com o ID {self.__coordenator.get_id()} foi desativado!"
+                )
+
+            else:
+                print("O coordenador já está inativo")
 
     def set_coordenator(self, process: Process) -> None:
         """
