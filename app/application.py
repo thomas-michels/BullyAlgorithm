@@ -21,10 +21,16 @@ class Application:
             None
         """
         time_now = ProcessThread(1, self.show_time)
-        request_coordenator = ProcessThread(25, self.process_manager.send_request_to_coordenator)
+        request_coordenator = ProcessThread(
+            25, self.process_manager.send_request_to_coordenator
+        )
         new_process = ProcessThread(30, self.process_manager.new_process)
-        deactive_random = ProcessThread(80, self.process_manager.deactive_random_process)
-        deactive_coordenator = ProcessThread(100, self.process_manager.deactive_coordenator)
+        deactive_random = ProcessThread(
+            80, self.process_manager.deactive_random_process
+        )
+        deactive_coordenator = ProcessThread(
+            100, self.process_manager.deactive_coordenator
+        )
 
         time_now.start()
         request_coordenator.start()
@@ -36,7 +42,6 @@ class Application:
         new_process.join()
         deactive_random.join()
         deactive_coordenator.join()
-
 
     def show_time(self):
         print(f"Hora atual - {datetime.now()}")
