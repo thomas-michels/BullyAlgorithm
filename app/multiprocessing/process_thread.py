@@ -9,6 +9,7 @@ class ProcessThread(Thread):
     """
     Process Thread class
     """
+
     def __init__(self, time_await, function):
         Thread.__init__(self)
         self.time_await = time_await

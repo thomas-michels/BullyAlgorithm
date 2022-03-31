@@ -33,11 +33,15 @@ class BullyAlgorithm(ElectionInterface):
         for process in processes:
             if process_start != process:
                 print(f"Enviado mensagem para o processo com o ID {process.get_id()}")
-                print(f"Mensagem {'Aceita' if Request.send(sender=process_start, receiver=process) else 'Negada'}")
+                print(
+                    f"Mensagem {'Aceita' if Request.send(sender=process_start, receiver=process) else 'Negada'}"
+                )
 
                 if process.get_id() > higher_process.get_id() and process.is_active():
                     higher_process = process
 
-        print(f"O coordenador selecionado foi o processo com o ID {higher_process.get_id()}")
+        print(
+            f"O coordenador selecionado foi o processo com o ID {higher_process.get_id()}"
+        )
 
         return higher_process
