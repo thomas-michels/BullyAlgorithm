@@ -74,7 +74,7 @@ class ProcessManager:
 
     def deactive_coordenator(self) -> None:
         """
-        Method to deactive process
+        Method to deactive coordenator
 
         :param:
             process: Process
@@ -85,7 +85,9 @@ class ProcessManager:
 
         if self.__coordenator:
             self.__coordenator.change_status()
-            print(f"O coordenador com o ID {self.__coordenator.get_id()} foi desativado!")
+            print(
+                f"O coordenador com o ID {self.__coordenator.get_id()} foi desativado!"
+            )
 
     def set_coordenator(self, process: Process) -> None:
         """
@@ -105,14 +107,24 @@ class ProcessManager:
         """
         return self.__coordenator
 
-    def send_request_to_coordenator(self):
+    def send_request_to_coordenator(self) -> None:
         """
+        Method to send request to coordenator, if request is false a new election is started
+
+        :return:
+            None
         """
         if not self.get_active_processes():
             return None
 
-        process = choice(self.get_active_processes())    
+        process = choice(self.get_active_processes())
         request = Request.send(process, self.get_coordenator())
-        print(f"Mensagem enviada do processo {process.get_id()} para o Coordenador - {'Aceita' if request else 'Negada'}")
+        print(
+            f"Mensagem enviada do processo {process.get_id()} para o Coordenador - {'Aceita' if request else 'Negada'}"
+        )
         if not request:
-            self.__coordenator = self.__election_type.run_election(process_start=process, processes=self.get_active_processes())
+            self.set_coordenator(
+                self.__election_type.run_election(
+                    process_start=process, processes=self.get_active_processes()
+                )
+            )

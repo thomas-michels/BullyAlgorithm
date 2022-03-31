@@ -2,7 +2,6 @@
     Module for request
 """
 from app.process import Process
-from app.exceptions import SenderOffline
 
 
 class Request:
