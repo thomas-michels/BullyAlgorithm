@@ -37,16 +37,17 @@ class ProcessManager:
 
         return actives
 
-    def new_process(self) -> None:
+    def new_process(self) -> Process:
         """
         Method to create new process
 
         :return:
-            None
+            Process
         """
         process = Process()
         self.__processes.append(process)
         print(f"O Processo com o ID {process.get_id()} foi criado!")
+        return process
 
     def deactive_random_process(self) -> None:
         """
