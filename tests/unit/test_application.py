@@ -2,12 +2,9 @@
     Module for tests in Application class
 """
 import unittest
-
 from unittest.mock import patch
-
 from mock import call
 from app.application import Application
-from app.process_manager.process_manager import ProcessManager
 from app.utils.time_now import show_time
 from tests.mocks.thread_mock.process_thread_mock import ProcessThreadMock
 
@@ -20,7 +17,7 @@ class TestApplication(unittest.TestCase):
     @patch("app.application.ProcessThread")
     def test_run(self, thread_mock):
         """
-        Method to test 
+        Method to test
         """
         thread_mock.side_effect = ProcessThreadMock
 

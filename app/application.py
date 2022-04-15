@@ -9,6 +9,9 @@ from app.utils import show_time
 
 
 class Application:
+    """
+    Application Class
+    """
     def __init__(self) -> None:
         self.process_manager = ProcessManager(BullyAlgorithm())
         self.run()
