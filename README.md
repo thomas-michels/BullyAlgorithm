@@ -1,4 +1,5 @@
 # Bully Algorithm
+[![Bully Algorithm Pipeline](https://github.com/thomas-michels/BullyAlgorithm/actions/workflows/pipeline.yml/badge.svg?branch=main&event=deployment)](https://github.com/thomas-michels/BullyAlgorithm/actions/workflows/pipeline.yml)
 
 This project implements a bully algorithm using multithreads. 
 
