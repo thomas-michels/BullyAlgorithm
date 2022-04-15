@@ -2,10 +2,10 @@
 Application module
 """
 
-from datetime import datetime
 from app.process_manager import ProcessManager
 from app.election import BullyAlgorithm
 from app.multiprocessing import ProcessThread
+from app.utils import show_time
 
 
 class Application:
@@ -20,7 +20,7 @@ class Application:
         :return:
             None
         """
-        time_now = ProcessThread(1, self.show_time)
+        time_now = ProcessThread(1, show_time)
         request_coordenator = ProcessThread(
             25, self.process_manager.send_request_to_coordenator
         )
@@ -42,6 +42,3 @@ class Application:
         new_process.join()
         deactive_random.join()
         deactive_coordenator.join()
-
-    def show_time(self):
-        print(f"Hora atual - {datetime.now()}")
